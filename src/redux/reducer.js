@@ -1,4 +1,4 @@
-import { LOAD_ERRORS } from './types';
+import { LOAD_ERRORS, ADD_ERROR } from './types';
 
 const initialState = [];
 export const errorsReducer = (
@@ -8,6 +8,13 @@ export const errorsReducer = (
   switch (action.type) {
     case LOAD_ERRORS:
       return [...state, ...action.payload];
+    case ADD_ERROR:
+      let newError = {
+        id: state.length.toString(),
+        text: action.payload,
+      };
+
+      return [...state, newError];
     default:
       return state;
   }

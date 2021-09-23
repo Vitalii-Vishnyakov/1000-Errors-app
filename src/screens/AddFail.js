@@ -1,21 +1,28 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Text,
   View,
   StyleSheet,
   Button,
 } from 'react-native';
-import { FlatList } from 'react-native-gesture-handler';
+import {
+  FlatList,
+  TextInput,
+} from 'react-native-gesture-handler';
 import { Dimensions } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
-import { loadErrors } from '../redux/action';
+import { addError, loadErrors } from '../redux/action';
 export const AddFail = ({}) => {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(loadErrors());
   }, [dispatch]);
 
+  const [input, setInput] = useState(null);
   const DATA = useSelector((state) => state.errors);
+  const addErrorHandler = () => {
+    dispatch(addError(input));
+  };
   return (
     <View style={styles.center}>
       <FlatList
@@ -28,7 +35,13 @@ export const AddFail = ({}) => {
                   <Button
                     style={styles.addBatton}
                     title='Add'
+                    onPress={addErrorHandler}
                   ></Button>
+                  <TextInput
+                    style={styles.input}
+                    onChangeText={setInput}
+                    value={input}
+                  />
                 </View>
               </View>
             );
@@ -73,8 +86,15 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   addBatton: {
-    flex: 1,
     width: 10,
   },
-  errorText: {},
+  input: {
+    height: 40,
+    margin: 12,
+    borderWidth: 1,
+    padding: 10,
+  },
+  errorText: {
+    alignItems: 'center',
+  },
 });
