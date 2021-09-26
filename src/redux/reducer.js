@@ -9,12 +9,17 @@ export const errorsReducer = (
     case LOAD_ERRORS:
       return [...state, ...action.payload];
     case ADD_ERROR:
-      let newError = {
+      const newError = {
         id: state.length.toString(),
         text: action.payload,
       };
+      if (state.length === 1) {
+        state[state.length] = newError;
+      } else {
+        state.splice(1, 0, newError);
+      }
 
-      return [...state, newError];
+      return [...state];
     default:
       return state;
   }
