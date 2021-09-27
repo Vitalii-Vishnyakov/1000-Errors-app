@@ -18,10 +18,12 @@ export const AddFail = ({}) => {
     dispatch(loadErrors());
   }, [dispatch]);
 
-  const [input, setInput] = useState(null);
+  const [inputType, setInputType] = useState(null);
+  const [inputMore, setInputmore] = useState(null);
+  const [inputResult, setInputResult] = useState(null);
   const DATA = useSelector((state) => state.errors);
   const addErrorHandler = () => {
-    dispatch(addError(input));
+    dispatch(addError([inputType, inputMore, inputResult]));
   };
   return (
     <View style={styles.center}>
@@ -39,8 +41,21 @@ export const AddFail = ({}) => {
                   ></Button>
                   <TextInput
                     style={styles.input}
-                    onChangeText={setInput}
-                    value={input}
+                    onChangeText={setInputType}
+                    value={inputType}
+                    placeholder='Тип ошибки'
+                  />
+                  <TextInput
+                    style={styles.input}
+                    onChangeText={setInputmore}
+                    value={inputMore}
+                    placeholder='подробности'
+                  />
+                  <TextInput
+                    style={styles.input}
+                    onChangeText={setInputResult}
+                    value={inputResult}
+                    placeholder='вывод'
                   />
                 </View>
               </View>
@@ -48,9 +63,20 @@ export const AddFail = ({}) => {
           } else {
             return (
               <View style={styles.wrapper}>
-                <View style={styles.block}>
-                  <Text style={styles.errorText}>
-                    {item.text}
+                <View
+                  style={{
+                    ...styles.block,
+                    backgroundColor: item.resultOfError
+                      ? 'rgba(24, 245, 128, 0.3)'
+                      : 'rgba(250, 42, 101, 0.3)',
+                  }}
+                >
+                  <Text style={styles.id}>{item.id}</Text>
+                  <Text>{item.typeOfError}</Text>
+                  <Text>{item.moreOfError}</Text>
+                  <Text>{item.resultOfError}</Text>
+                  <Text style={styles.time}>
+                    {item.time}
                   </Text>
                 </View>
               </View>
@@ -75,8 +101,20 @@ const styles = StyleSheet.create({
     borderRadius: 25,
     backgroundColor: 'rgba(200, 200, 255, 0.3)',
     elevation: 4,
-    justifyContent: 'center',
   },
+  time: {
+    bottom: 0,
+    position: 'absolute',
+    alignSelf: 'center',
+    fontSize: 12,
+  },
+  id: {
+    padding: 20,
+    position: 'absolute',
+    alignSelf: 'flex-end',
+    fontSize: 20,
+  },
+
   addBlock: {
     width: Dimensions.get('window').width / 1.3,
     height: Dimensions.get('window').height / 1.2,
@@ -93,8 +131,5 @@ const styles = StyleSheet.create({
     margin: 12,
     borderWidth: 1,
     padding: 10,
-  },
-  errorText: {
-    alignItems: 'center',
   },
 });

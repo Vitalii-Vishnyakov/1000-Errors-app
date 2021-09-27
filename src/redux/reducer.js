@@ -9,9 +9,24 @@ export const errorsReducer = (
     case LOAD_ERRORS:
       return [...state, ...action.payload];
     case ADD_ERROR:
+      let data = new Date();
+      const time =
+        data.getDate().toString() +
+        '/' +
+        (data.getMonth() + 1).toString() +
+        '/' +
+        data.getFullYear().toString() +
+        ' ' +
+        data.getHours().toString() +
+        ':' +
+        data.getMinutes().toString();
+
       const newError = {
         id: state.length.toString(),
-        text: action.payload,
+        time: time,
+        typeOfError: action.payload[0],
+        moreOfError: action.payload[1],
+        resultOfError: action.payload[2],
       };
       if (state.length === 1) {
         state[state.length] = newError;
