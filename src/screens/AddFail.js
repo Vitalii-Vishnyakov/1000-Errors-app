@@ -4,60 +4,51 @@ import {
   View,
   StyleSheet,
   Button,
-} from 'react-native';
-import {
+  Alert,
   FlatList,
   TextInput,
-} from 'react-native-gesture-handler';
+  TouchableOpacity,
+} from 'react-native';
+
 import { Dimensions } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { addError, loadErrors } from '../redux/action';
+import { AddModal } from '../components/AddModal';
 export const AddFail = ({}) => {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(loadErrors());
   }, [dispatch]);
 
-  const [inputType, setInputType] = useState(null);
-  const [inputMore, setInputmore] = useState(null);
-  const [inputResult, setInputResult] = useState(null);
+  const [isShowModal, setIsShowModal] = useState(false);
+
   const DATA = useSelector((state) => state.errors);
-  const addErrorHandler = () => {
-    dispatch(addError([inputType, inputMore, inputResult]));
-  };
+
   return (
     <View style={styles.center}>
+      <AddModal
+        visible={isShowModal}
+        hideModal={() => {
+          setIsShowModal((prev) => !prev);
+        }}
+      ></AddModal>
       <FlatList
         data={DATA}
         renderItem={({ item }) => {
           if (item.id === '0') {
             return (
               <View style={styles.addWrapper}>
-                <View style={styles.addBlock}>
-                  <Button
-                    style={styles.addBatton}
-                    title='Add'
-                    onPress={addErrorHandler}
-                  ></Button>
-                  <TextInput
-                    style={styles.input}
-                    onChangeText={setInputType}
-                    value={inputType}
-                    placeholder='Тип ошибки'
-                  />
-                  <TextInput
-                    style={styles.input}
-                    onChangeText={setInputmore}
-                    value={inputMore}
-                    placeholder='подробности'
-                  />
-                  <TextInput
-                    style={styles.input}
-                    onChangeText={setInputResult}
-                    value={inputResult}
-                    placeholder='вывод'
-                  />
-                </View>
+                <TouchableOpacity
+                  activeOpacity={0.7}
+                  onPress={() =>
+                    setIsShowModal((prev) => !prev)
+                  }
+                >
+                  <View
+                    style={styles.addBlock}
+                    key={item.id}
+                  ></View>
+                </TouchableOpacity>
               </View>
             );
           } else {
@@ -72,9 +63,32 @@ export const AddFail = ({}) => {
                   }}
                 >
                   <Text style={styles.id}>{item.id}</Text>
-                  <Text>{item.typeOfError}</Text>
-                  <Text>{item.moreOfError}</Text>
-                  <Text>{item.resultOfError}</Text>
+                  <View style={styles.mainBlockWithText}>
+                    <Text
+                      style={styles.mainBlockTextBorder}
+                    >
+                      Тип ошибки
+                    </Text>
+                    <Text style={styles.mainBlockText}>
+                      {item.typeOfError}
+                    </Text>
+                    <Text
+                      style={styles.mainBlockTextBorder}
+                    >
+                      Суть ошибки
+                    </Text>
+                    <Text style={styles.mainBlockText}>
+                      {item.moreOfError}
+                    </Text>
+                    <Text
+                      style={styles.mainBlockTextBorder}
+                    >
+                      Вывод
+                    </Text>
+                    <Text style={styles.mainBlockText}>
+                      {item.resultOfError}
+                    </Text>
+                  </View>
                   <Text style={styles.time}>
                     {item.time}
                   </Text>
@@ -110,9 +124,20 @@ const styles = StyleSheet.create({
   },
   id: {
     padding: 20,
-    position: 'absolute',
+
     alignSelf: 'flex-end',
     fontSize: 20,
+  },
+  mainBlockWithText: {
+    padding: 10,
+  },
+  mainBlockText: {
+    marginBottom: 120,
+  },
+  mainBlockTextBorder: {
+    borderBottomColor: 'black',
+
+    borderBottomWidth: 1,
   },
 
   addBlock: {
