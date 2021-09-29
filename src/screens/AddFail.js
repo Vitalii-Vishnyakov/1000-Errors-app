@@ -14,24 +14,22 @@ import { Dimensions } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { addError, loadErrors } from '../redux/action';
 import { AddModal } from '../components/AddModal';
+import { EditModal } from '../components/EditModal';
 export const AddFail = ({}) => {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(loadErrors());
   }, [dispatch]);
-
-  const [isShowModal, setIsShowModal] = useState(false);
+  const [editErrorId, setEditErrorId] = useState(0);
+  const [isShowAddModal, setIsShowAddModal] =
+    useState(false);
+  const [isShowEditModal, setIsShowEditModal] =
+    useState(false);
 
   const DATA = useSelector((state) => state.errors);
 
   return (
     <View style={styles.center}>
-      <AddModal
-        visible={isShowModal}
-        hideModal={() => {
-          setIsShowModal((prev) => !prev);
-        }}
-      ></AddModal>
       <FlatList
         data={DATA}
         renderItem={({ item }) => {
@@ -41,7 +39,7 @@ export const AddFail = ({}) => {
                 <TouchableOpacity
                   activeOpacity={0.7}
                   onPress={() =>
-                    setIsShowModal((prev) => !prev)
+                    setIsShowAddModal((prev) => !prev)
                   }
                 >
                   <View
@@ -54,45 +52,53 @@ export const AddFail = ({}) => {
           } else {
             return (
               <View style={styles.wrapper}>
-                <View
-                  style={{
-                    ...styles.block,
-                    backgroundColor: item.resultOfError
-                      ? 'rgba(24, 245, 128, 0.3)'
-                      : 'rgba(250, 42, 101, 0.3)',
+                <TouchableOpacity
+                  activeOpacity={0.7}
+                  onPress={() => {
+                    setIsShowEditModal((prev) => !prev);
+                    setEditErrorId(item.id);
                   }}
                 >
-                  <Text style={styles.id}>{item.id}</Text>
-                  <View style={styles.mainBlockWithText}>
-                    <Text
-                      style={styles.mainBlockTextBorder}
-                    >
-                      Тип ошибки
-                    </Text>
-                    <Text style={styles.mainBlockText}>
-                      {item.typeOfError}
-                    </Text>
-                    <Text
-                      style={styles.mainBlockTextBorder}
-                    >
-                      Суть ошибки
-                    </Text>
-                    <Text style={styles.mainBlockText}>
-                      {item.moreOfError}
-                    </Text>
-                    <Text
-                      style={styles.mainBlockTextBorder}
-                    >
-                      Вывод
-                    </Text>
-                    <Text style={styles.mainBlockText}>
-                      {item.resultOfError}
+                  <View
+                    style={{
+                      ...styles.block,
+                      backgroundColor: item.resultOfError
+                        ? 'rgba(24, 245, 128, 0.3)'
+                        : 'rgba(250, 42, 101, 0.3)',
+                    }}
+                  >
+                    <Text style={styles.id}>{item.id}</Text>
+                    <View style={styles.mainBlockWithText}>
+                      <Text
+                        style={styles.mainBlockTextBorder}
+                      >
+                        Тип ошибки
+                      </Text>
+                      <Text style={styles.mainBlockText}>
+                        {item.typeOfError}
+                      </Text>
+                      <Text
+                        style={styles.mainBlockTextBorder}
+                      >
+                        Суть ошибки
+                      </Text>
+                      <Text style={styles.mainBlockText}>
+                        {item.moreOfError}
+                      </Text>
+                      <Text
+                        style={styles.mainBlockTextBorder}
+                      >
+                        Вывод
+                      </Text>
+                      <Text style={styles.mainBlockText}>
+                        {item.resultOfError}
+                      </Text>
+                    </View>
+                    <Text style={styles.time}>
+                      {item.time}
                     </Text>
                   </View>
-                  <Text style={styles.time}>
-                    {item.time}
-                  </Text>
-                </View>
+                </TouchableOpacity>
               </View>
             );
           }
@@ -102,6 +108,19 @@ export const AddFail = ({}) => {
         inverted
         showsHorizontalScrollIndicator={false}
       ></FlatList>
+      <AddModal
+        visible={isShowAddModal}
+        hideModal={() => {
+          setIsShowAddModal((prev) => !prev);
+        }}
+      ></AddModal>
+      <EditModal
+        visible={isShowEditModal}
+        hideModal={() => {
+          setIsShowEditModal((prev) => !prev);
+        }}
+        editErrorId={editErrorId}
+      ></EditModal>
     </View>
   );
 };
