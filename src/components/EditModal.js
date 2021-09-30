@@ -9,7 +9,11 @@ import {
 } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { Dimensions, TextInput } from 'react-native';
-import { addError, loadErrors } from '../redux/action';
+import {
+  addError,
+  editError,
+  loadErrors,
+} from '../redux/action';
 
 export const EditModal = ({
   visible,
@@ -56,11 +60,10 @@ export const EditModal = ({
       createTwoButtonAlert();
     } else {
       dispatch(
-        addError([
-          inputTypeEdit,
-          inputMoreEdit,
-          inputResultEdit,
-        ])
+        editError(
+          [inputTypeEdit, inputMoreEdit, inputResultEdit],
+          editErrorId
+        )
       );
     }
   };

@@ -1,5 +1,9 @@
 import { DATA } from '../data';
-import { ADD_ERROR, LOAD_ERRORS } from './types';
+import {
+  ADD_ERROR,
+  EDIT_ERROR,
+  LOAD_ERRORS,
+} from './types';
 
 export const loadErrors = () => {
   return {
@@ -11,5 +15,11 @@ export const addError = (text) => {
   return {
     type: ADD_ERROR,
     payload: text,
+  };
+};
+export const editError = (text, id) => {
+  return {
+    type: EDIT_ERROR,
+    payload: { text, id },
   };
 };

@@ -12,9 +12,11 @@ import {
 
 import { Dimensions } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
-import { addError, loadErrors } from '../redux/action';
+import { loadErrors } from '../redux/action';
 import { AddModal } from '../components/AddModal';
 import { EditModal } from '../components/EditModal';
+import { MultiSelectExample } from '../components/Drop';
+
 export const AddFail = ({}) => {
   const dispatch = useDispatch();
   useEffect(() => {
@@ -45,7 +47,9 @@ export const AddFail = ({}) => {
                   <View
                     style={styles.addBlock}
                     key={item.id}
-                  ></View>
+                  >
+                    <MultiSelectExample></MultiSelectExample>
+                  </View>
                 </TouchableOpacity>
               </View>
             );
