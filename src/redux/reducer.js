@@ -13,35 +13,14 @@ export const errorsReducer = (
     case LOAD_ERRORS:
       return [...state, ...action.payload];
     case ADD_ERROR:
-      let data = new Date();
-      const time =
-        data.getDate().toString() +
-        '/' +
-        (data.getMonth() + 1).toString() +
-        '/' +
-        data.getFullYear().toString() +
-        ' ' +
-        data.getHours().toString() +
-        ':' +
-        data.getMinutes().toString();
-
-      const newError = {
-        id: state.length.toString(),
-        time: time,
-        typeOfError: action.payload[0],
-        moreOfError: action.payload[1],
-        resultOfError: action.payload[2],
-      };
       if (state.length === 1) {
-        state[state.length] = newError;
+        state[state.length] = action.payload;
       } else {
-        state.splice(1, 0, newError);
+        state.splice(1, 0, action.payload);
       }
 
       return [...state];
     case EDIT_ERROR:
-      console.log(action.payload.id);
-
       const editedError =
         state[state.length - Number(action.payload.id)];
       editedError.typeOfError = action.payload.text[0];

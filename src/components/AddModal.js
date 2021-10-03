@@ -13,9 +13,9 @@ import { addError, loadErrors } from '../redux/action';
 
 export const AddModal = ({ visible, hideModal }) => {
   const dispatch = useDispatch();
-  const [inputType, setInputType] = useState(null);
-  const [inputMore, setInputmore] = useState(null);
-  const [inputResult, setInputResult] = useState(null);
+  const [inputType, setInputType] = useState('');
+  const [inputMore, setInputmore] = useState('');
+  const [inputResult, setInputResult] = useState('');
   const createTwoButtonAlert = () =>
     Alert.alert(
       'Не все поля заполны',

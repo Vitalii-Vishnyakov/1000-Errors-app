@@ -9,17 +9,19 @@ import {
   TextInput,
   TouchableOpacity,
 } from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
 
 import { Dimensions } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
-import { loadErrors } from '../redux/action';
+import { addError, loadErrors } from '../redux/action';
 import { AddModal } from '../components/AddModal';
 import { EditModal } from '../components/EditModal';
-import { MultiSelectExample } from '../components/Drop';
 
 export const AddFail = ({}) => {
   const dispatch = useDispatch();
   useEffect(() => {
+    dispatch(addError(['', '', '']));
+
     dispatch(loadErrors());
   }, [dispatch]);
   const [editErrorId, setEditErrorId] = useState(0);
@@ -35,7 +37,7 @@ export const AddFail = ({}) => {
       <FlatList
         data={DATA}
         renderItem={({ item }) => {
-          if (item.id === '0') {
+          if (item.id === '1') {
             return (
               <View style={styles.addWrapper}>
                 <TouchableOpacity
@@ -48,7 +50,13 @@ export const AddFail = ({}) => {
                     style={styles.addBlock}
                     key={item.id}
                   >
-                    <MultiSelectExample></MultiSelectExample>
+                    <Ionicons
+                      style={styles.plusIcon}
+                      name='add-outline'
+                      size={
+                        Dimensions.get('window').width / 3
+                      }
+                    ></Ionicons>
                   </View>
                 </TouchableOpacity>
               </View>
@@ -132,6 +140,10 @@ const styles = StyleSheet.create({
   center: { padding: 20, paddingRight: 30 },
   wrapper: { padding: 10 },
   addWrapper: { padding: 10 },
+  plusIcon: {
+    alignSelf: 'center',
+    color: 'grey',
+  },
   block: {
     width: Dimensions.get('window').width / 1.3,
     height: Dimensions.get('window').height / 1.2,
@@ -144,6 +156,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     alignSelf: 'center',
     fontSize: 12,
+    fontFamily: 'Roboto-Light',
   },
   id: {
     padding: 20,
@@ -156,6 +169,8 @@ const styles = StyleSheet.create({
   },
   mainBlockText: {
     marginBottom: 120,
+    fontFamily: 'Roboto-Light',
+    fontSize: 15,
   },
   mainBlockTextBorder: {
     borderBottomColor: 'black',
