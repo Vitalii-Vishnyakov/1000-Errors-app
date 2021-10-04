@@ -13,21 +13,17 @@ export const errorsReducer = (
     case LOAD_ERRORS:
       return [...state, ...action.payload];
     case ADD_ERROR:
-      if (state.length === 1) {
-        state[state.length] = action.payload;
-      } else {
-        state.splice(1, 0, action.payload);
-      }
-
+      state.push(action.payload);
       return [...state];
     case EDIT_ERROR:
-      const editedError =
-        state[state.length - Number(action.payload.id)];
-      editedError.typeOfError = action.payload.text[0];
-      editedError.moreOfError = action.payload.text[1];
-      editedError.resultOfError = action.payload.text[2];
-      state[state.length - Number(action.payload.id)] =
-        editedError;
+      const editedError = state[Number(action.payload.id)];
+      editedError.typeOfError =
+        action.payload.newErrorData[0];
+      editedError.moreOfError =
+        action.payload.newErrorData[1];
+      editedError.resultOfError =
+        action.payload.newErrorData[2];
+      state[Number(action.payload.id)] = editedError;
       return [...state];
     default:
       return state;

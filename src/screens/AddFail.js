@@ -20,8 +20,6 @@ import { EditModal } from '../components/EditModal';
 export const AddFail = ({}) => {
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(addError(['', '', '']));
-
     dispatch(loadErrors());
   }, [dispatch]);
   const [editErrorId, setEditErrorId] = useState(0);
@@ -29,15 +27,22 @@ export const AddFail = ({}) => {
     useState(false);
   const [isShowEditModal, setIsShowEditModal] =
     useState(false);
-
-  const DATA = useSelector((state) => state.errors);
+  const tmpDATA = useSelector((state) => state.errors);
+  const DATA = [];
+  for (let index = 0; index < tmpDATA.length; index++) {
+    if (index === 0) {
+      DATA[index] = tmpDATA[index];
+    } else {
+      DATA[index] = tmpDATA[tmpDATA.length - index];
+    }
+  }
 
   return (
     <View style={styles.center}>
       <FlatList
         data={DATA}
         renderItem={({ item }) => {
-          if (item.id === '1') {
+          if (item.id === 1) {
             return (
               <View style={styles.addWrapper}>
                 <TouchableOpacity
@@ -68,7 +73,7 @@ export const AddFail = ({}) => {
                   activeOpacity={0.7}
                   onPress={() => {
                     setIsShowEditModal((prev) => !prev);
-                    setEditErrorId(item.id);
+                    setEditErrorId(item.id - 1);
                   }}
                 >
                   <View
@@ -79,7 +84,9 @@ export const AddFail = ({}) => {
                         : 'rgba(250, 42, 101, 0.3)',
                     }}
                   >
-                    <Text style={styles.id}>{item.id}</Text>
+                    <Text style={styles.id}>
+                      {item.id - 1}
+                    </Text>
                     <View style={styles.mainBlockWithText}>
                       <Text
                         style={styles.mainBlockTextBorder}
@@ -115,7 +122,7 @@ export const AddFail = ({}) => {
             );
           }
         }}
-        keyExtractor={(item) => item.id}
+        keyExtractor={(item) => item.id.toString()}
         horizontal={true}
         inverted
         showsHorizontalScrollIndicator={false}

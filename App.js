@@ -8,6 +8,7 @@ import AppLoading from 'expo-app-loading';
 import * as Font from 'expo-font';
 import { DB } from './src/db';
 import { addError } from './src/redux/action';
+import { disableExpoCliLogging } from 'expo/build/logs/Logs';
 
 export default function App() {
   //const dispatch = useDispatch();
@@ -25,8 +26,6 @@ export default function App() {
       console.log('DB connct error ->>> ', error);
     }
     try {
-      //dispatch(addError(['', '', '']));
-      //console.log('Add zero item');
     } catch (error) {
       console.log('Add zero item error ->>> ', error);
     }

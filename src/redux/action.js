@@ -8,7 +8,14 @@ import {
 
 export const loadErrors = () => {
   return async (dispatch) => {
+    const tmpErrors = await DB.getErrors();
+    if (tmpErrors.length === 0) {
+      await DB.addFirstItem();
+      console.log(tmpErrors);
+      console.log('Add first item');
+    }
     const errors = await DB.getErrors();
+    console.log('After add first item ', errors);
     dispatch({
       type: LOAD_ERRORS,
       payload: errors,
@@ -39,16 +46,19 @@ export const addError = (text) => {
     };
 
     const id = await DB.createError(newError);
-    newError.id = id.toString();
+    newError.id = id;
     dispatch({
       type: ADD_ERROR,
       payload: newError,
     });
   };
 };
-export const editError = (text, id) => {
-  return {
-    type: EDIT_ERROR,
-    payload: { text, id },
+export const editError = (newErrorData, id) => {
+  return async (dispatch) => {
+    await DB.updateError(newErrorData, id);
+    dispatch({
+      type: EDIT_ERROR,
+      payload: { newErrorData, id },
+    });
   };
 };

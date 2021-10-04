@@ -23,7 +23,7 @@ export const EditModal = ({
   const dispatch = useDispatch();
   const DATA = useSelector((state) => state.errors || '');
 
-  let error = DATA[DATA.length - Number(editErrorId)] || {};
+  let error = DATA[Number(editErrorId)] || {};
 
   const [inputTypeEdit, setInputType] = useState(
     error.typeOfError
