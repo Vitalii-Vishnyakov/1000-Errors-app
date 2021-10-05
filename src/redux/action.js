@@ -11,11 +11,9 @@ export const loadErrors = () => {
     const tmpErrors = await DB.getErrors();
     if (tmpErrors.length === 0) {
       await DB.addFirstItem();
-      console.log(tmpErrors);
-      console.log('Add first item');
     }
     const errors = await DB.getErrors();
-    console.log('After add first item ', errors);
+
     dispatch({
       type: LOAD_ERRORS,
       payload: errors,

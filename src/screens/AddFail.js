@@ -44,9 +44,9 @@ export const AddFail = ({}) => {
         renderItem={({ item }) => {
           if (item.id === 1) {
             return (
-              <View style={styles.addWrapper}>
+              <View style={styles.separator}>
                 <TouchableOpacity
-                  activeOpacity={0.7}
+                  activeOpacity={0.9}
                   onPress={() =>
                     setIsShowAddModal((prev) => !prev)
                   }
@@ -68,9 +68,9 @@ export const AddFail = ({}) => {
             );
           } else {
             return (
-              <View style={styles.wrapper}>
+              <View style={styles.separator}>
                 <TouchableOpacity
-                  activeOpacity={0.7}
+                  activeOpacity={0.9}
                   onPress={() => {
                     setIsShowEditModal((prev) => !prev);
                     setEditErrorId(item.id - 1);
@@ -126,6 +126,7 @@ export const AddFail = ({}) => {
         horizontal={true}
         inverted
         showsHorizontalScrollIndicator={false}
+        style={styles.flatList}
       ></FlatList>
       <AddModal
         visible={isShowAddModal}
@@ -144,19 +145,26 @@ export const AddFail = ({}) => {
   );
 };
 const styles = StyleSheet.create({
-  center: { padding: 20, paddingRight: 30 },
-  wrapper: { padding: 10 },
-  addWrapper: { padding: 10 },
+  center: {
+    width: '100%',
+    height: '100%',
+    //backgroundColor: 'red',
+  },
+  separator: {
+    paddingRight: Dimensions.get('window').width / 12,
+  },
+  flatList: {
+    marginVertical: '10%',
+  },
   plusIcon: {
     alignSelf: 'center',
-    color: 'grey',
+    color: 'white',
   },
   block: {
     width: Dimensions.get('window').width / 1.3,
-    height: Dimensions.get('window').height / 1.2,
+    height: '99%',
     borderRadius: 25,
-    backgroundColor: 'rgba(200, 200, 255, 0.3)',
-    elevation: 4,
+    backgroundColor: 'rgba(0, 0, 0, 0.3)',
   },
   time: {
     bottom: 0,
@@ -187,15 +195,13 @@ const styles = StyleSheet.create({
 
   addBlock: {
     width: Dimensions.get('window').width / 1.3,
-    height: Dimensions.get('window').height / 1.2,
+    height: '99%',
     borderRadius: 25,
-    backgroundColor: 'rgba(200, 200, 255, 0.3)',
-    elevation: 4,
+    backgroundColor: 'rgba(0, 0, 0, 1)',
+
     justifyContent: 'center',
   },
-  addBatton: {
-    width: 10,
-  },
+
   input: {
     height: 40,
     margin: 12,
