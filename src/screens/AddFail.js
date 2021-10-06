@@ -154,7 +154,7 @@ const styles = StyleSheet.create({
     paddingRight: Dimensions.get('window').width / 12,
   },
   flatList: {
-    marginVertical: '15%',
+    paddingVertical: Dimensions.get('window').height / 11,
   },
   plusIcon: {
     alignSelf: 'center',
@@ -162,7 +162,7 @@ const styles = StyleSheet.create({
   },
   block: {
     width: Dimensions.get('window').width / 1.3,
-    height: '99%',
+    height: Dimensions.get('window').height / 1.35,
     borderRadius: 25,
 
     borderWidth: 2,
@@ -176,7 +176,7 @@ const styles = StyleSheet.create({
   },
   id: {
     padding: 15,
-
+    fontFamily: 'Roboto-Bold',
     fontSize: 25,
   },
   headerWrapper: {
@@ -185,16 +185,16 @@ const styles = StyleSheet.create({
   userText: {
     fontFamily: 'Roboto-Light',
     fontSize: 15,
-    paddingHorizontal: 15,
+    paddingHorizontal: 30,
   },
   header: {
     fontFamily: 'Roboto-Medium',
-    paddingHorizontal: 10,
+    paddingHorizontal: 20,
   },
 
   addBlock: {
     width: Dimensions.get('window').width / 1.3,
-    height: '99%',
+    height: Dimensions.get('window').height / 1.35,
     borderRadius: 25,
     borderColor: 'black',
     borderWidth: 2,

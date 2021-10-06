@@ -21,8 +21,8 @@ export const AddModal = ({ visible, hideModal }) => {
   const [inputResult, setInputResult] = useState('');
   const createTwoButtonAlert = () =>
     Alert.alert(
-      'Не все поля заполны',
-      'Укажите тип и подробности',
+      'Не спешите...',
+      'Все поля должны быть заполнены, кроме поля вывода, его можно заполнить позже.',
       [
         {
           text: 'OK',
@@ -50,10 +50,24 @@ export const AddModal = ({ visible, hideModal }) => {
   };
 
   return (
-    <Modal visible={visible} animationType='fade'>
+    <Modal
+      visible={visible}
+      animationType='fade'
+      onRequestClose={() => {
+        hideModal();
+        setInputType('');
+        setInputmore('');
+        setInputResult('');
+      }}
+    >
       <Ionicons
         name='close-outline'
-        onPress={hideModal}
+        onPress={() => {
+          hideModal();
+          setInputType('');
+          setInputmore('');
+          setInputResult('');
+        }}
         size={40}
         style={styles.closeIcon}
       ></Ionicons>
@@ -91,7 +105,7 @@ export const AddModal = ({ visible, hideModal }) => {
       <View style={styles.addBatton}>
         <TouchableOpacity
           onPress={addErrorHandler}
-          activeOpacity={0.8}
+          activeOpacity={0.7}
         >
           <Text style={styles.addButtonText}>
             Добавить ошибку

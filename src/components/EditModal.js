@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react';
-
 import {
   Modal,
   View,
   StyleSheet,
   Button,
   Alert,
+  TouchableOpacity,
+  Text,
 } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { Dimensions, TextInput } from 'react-native';
@@ -14,6 +15,7 @@ import {
   editError,
   loadErrors,
 } from '../redux/action';
+import { Ionicons } from '@expo/vector-icons';
 
 export const EditModal = ({
   visible,
@@ -38,11 +40,11 @@ export const EditModal = ({
     setInputType(error.typeOfError);
     setInputmore(error.moreOfError);
     setInputResult(error.resultOfError);
-  }, [editErrorId]);
+  }, [editErrorId, visible]);
   const createTwoButtonAlert = () =>
     Alert.alert(
-      'Не все поля заполны',
-      'Укажите тип и подробности',
+      'Не спешите...',
+      'Все поля должны быть заполнены, кроме поля вывода, его можно заполнить позже.',
       [
         {
           text: 'OK',
@@ -65,60 +67,85 @@ export const EditModal = ({
           editErrorId
         )
       );
+      hideModal();
     }
   };
   return (
-    <Modal visible={visible} animationType='fade'>
-      <Button
-        style={styles.addBatton}
-        title='Edit'
-        onPress={editErrorHandler}
-      ></Button>
-      <TextInput
-        style={styles.input}
-        onChangeText={setInputType}
-        value={inputTypeEdit}
-        placeholder='Тип ошибки'
-        maxLength={30}
-      />
-      <TextInput
-        style={styles.input}
-        onChangeText={setInputmore}
-        value={inputMoreEdit}
-        placeholder='подробности'
-        maxLength={150}
-      />
-      <TextInput
-        style={styles.input}
-        onChangeText={setInputResult}
-        value={inputResultEdit}
-        placeholder='вывод'
-        maxLength={150}
-      />
-      <Button
-        style={styles.addBatton}
-        title='Hide'
+    <Modal
+      visible={visible}
+      animationType='fade'
+      onRequestClose={() => {
+        hideModal();
+        setInputType('');
+        setInputmore('');
+        setInputResult('');
+      }}
+    >
+      <Ionicons
+        name='close-outline'
         onPress={hideModal}
-      ></Button>
+        size={40}
+        style={styles.closeIcon}
+      ></Ionicons>
+      <View style={styles.textInputBlock}>
+        <TextInput
+          multiline={true}
+          style={styles.input}
+          onChangeText={setInputType}
+          value={inputTypeEdit}
+          placeholder='Из какой сферы жизни ошибка?'
+          maxLength={30}
+        />
+      </View>
+      <View style={styles.textInputBlock}>
+        <TextInput
+          multiline={true}
+          style={styles.input}
+          onChangeText={setInputmore}
+          value={inputMoreEdit}
+          placeholder='Расскажите подробнее...'
+          maxLength={200}
+        />
+      </View>
+      <View style={styles.textInputBlock}>
+        <TextInput
+          multiline={true}
+          style={styles.input}
+          onChangeText={setInputResult}
+          value={inputResultEdit}
+          placeholder='Какой вывод вы сделали?'
+          maxLength={200}
+        />
+      </View>
+
+      <View style={styles.addBatton}>
+        <TouchableOpacity
+          onPress={editErrorHandler}
+          activeOpacity={0.7}
+        >
+          <Text style={styles.addButtonText}>
+            Отредактировать ошибку
+          </Text>
+        </TouchableOpacity>
+      </View>
     </Modal>
   );
 };
 const styles = StyleSheet.create({
-  addBlock: {
-    width: Dimensions.get('window').width / 1.3,
-    height: Dimensions.get('window').height / 1.2,
-    borderRadius: 25,
-    backgroundColor: 'rgba(200, 200, 255, 0.3)',
-    elevation: 4,
-    justifyContent: 'center',
-  },
   addBatton: {
-    width: 10,
+    alignItems: 'center',
   },
-  input: {
-    height: 40,
-    margin: 12,
+  addButtonText: {
+    fontFamily: 'Roboto-Bold',
     borderWidth: 1,
-    padding: 10,
+    borderColor: 'black',
+    borderRadius: 100,
+    padding: 15,
   },
+  closeIcon: {
+    alignSelf: 'flex-end',
+    padding: 20,
+  },
+  input: { paddingHorizontal: 20 },
+  textInputBlock: { height: '20%' },
 });
