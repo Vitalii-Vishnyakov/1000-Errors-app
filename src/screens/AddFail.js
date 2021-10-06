@@ -21,7 +21,7 @@ export const AddFail = ({}) => {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(loadErrors());
-  }, [dispatch]);
+  }, [dispatch, isShowAddModal, isShowEditModal]);
   const [editErrorId, setEditErrorId] = useState(0);
   const [isShowAddModal, setIsShowAddModal] =
     useState(false);
@@ -79,39 +79,39 @@ export const AddFail = ({}) => {
                   <View
                     style={{
                       ...styles.block,
-                      backgroundColor: item.resultOfError
-                        ? 'rgba(24, 245, 128, 0.3)'
-                        : 'rgba(250, 42, 101, 0.3)',
+                      borderColor: item.resultOfError
+                        ? 'rgba(0, 184, 86, 1)'
+                        : '#EE3D48',
                     }}
                   >
                     <Text style={styles.id}>
                       {item.id - 1}
                     </Text>
-                    <View style={styles.mainBlockWithText}>
-                      <Text
-                        style={styles.mainBlockTextBorder}
-                      >
-                        Тип ошибки
-                      </Text>
-                      <Text style={styles.mainBlockText}>
-                        {item.typeOfError}
-                      </Text>
-                      <Text
-                        style={styles.mainBlockTextBorder}
-                      >
-                        Суть ошибки
-                      </Text>
-                      <Text style={styles.mainBlockText}>
-                        {item.moreOfError}
-                      </Text>
-                      <Text
-                        style={styles.mainBlockTextBorder}
-                      >
-                        Вывод
-                      </Text>
-                      <Text style={styles.mainBlockText}>
-                        {item.resultOfError}
-                      </Text>
+                    <View>
+                      <View style={styles.headerWrapper}>
+                        <Text style={styles.header}>
+                          Из какой сферы жизни ошибка?
+                        </Text>
+                        <Text style={styles.userText}>
+                          {item.typeOfError}
+                        </Text>
+                      </View>
+                      <View style={styles.headerWrapper}>
+                        <Text style={styles.header}>
+                          Расскажите подробнее...
+                        </Text>
+                        <Text style={styles.userText}>
+                          {item.moreOfError}
+                        </Text>
+                      </View>
+                      <View style={styles.headerWrapper}>
+                        <Text style={styles.header}>
+                          Какой вывод вы сделали?
+                        </Text>
+                        <Text style={styles.userText}>
+                          {item.resultOfError}
+                        </Text>
+                      </View>
                     </View>
                     <Text style={styles.time}>
                       {item.time}
@@ -154,17 +154,18 @@ const styles = StyleSheet.create({
     paddingRight: Dimensions.get('window').width / 12,
   },
   flatList: {
-    marginVertical: '10%',
+    marginVertical: '15%',
   },
   plusIcon: {
     alignSelf: 'center',
-    color: 'white',
+    color: 'black',
   },
   block: {
     width: Dimensions.get('window').width / 1.3,
     height: '99%',
     borderRadius: 25,
-    backgroundColor: 'rgba(0, 0, 0, 0.3)',
+
+    borderWidth: 2,
   },
   time: {
     bottom: 0,
@@ -174,38 +175,29 @@ const styles = StyleSheet.create({
     fontFamily: 'Roboto-Light',
   },
   id: {
-    padding: 20,
+    padding: 15,
 
-    alignSelf: 'flex-end',
-    fontSize: 20,
+    fontSize: 25,
   },
-  mainBlockWithText: {
-    padding: 10,
+  headerWrapper: {
+    height: '31%',
   },
-  mainBlockText: {
-    marginBottom: 120,
+  userText: {
     fontFamily: 'Roboto-Light',
     fontSize: 15,
+    paddingHorizontal: 15,
   },
-  mainBlockTextBorder: {
-    borderBottomColor: 'black',
-
-    borderBottomWidth: 1,
+  header: {
+    fontFamily: 'Roboto-Medium',
+    paddingHorizontal: 10,
   },
 
   addBlock: {
     width: Dimensions.get('window').width / 1.3,
     height: '99%',
     borderRadius: 25,
-    backgroundColor: 'rgba(0, 0, 0, 1)',
-
+    borderColor: 'black',
+    borderWidth: 2,
     justifyContent: 'center',
-  },
-
-  input: {
-    height: 40,
-    margin: 12,
-    borderWidth: 1,
-    padding: 10,
   },
 });
