@@ -8,6 +8,8 @@ import {
   Alert,
   Text,
   TouchableOpacity,
+  ScrollView,
+  Touchable,
 } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { Dimensions, TextInput } from 'react-native';
@@ -19,6 +21,20 @@ export const AddModal = ({ visible, hideModal }) => {
   const [inputType, setInputType] = useState('');
   const [inputMore, setInputmore] = useState('');
   const [inputResult, setInputResult] = useState('');
+
+  const typesOfErrors = [
+    'Семья',
+    'Финансы',
+    'Работа',
+    'Здоровье',
+    'Любовь',
+    'Учёба',
+    'Дружба',
+    'Саморазвитие',
+    'Знакомства',
+    'Секс',
+    'Имидж',
+  ];
   const createTwoButtonAlert = () =>
     Alert.alert(
       'Не спешите...',
@@ -48,7 +64,9 @@ export const AddModal = ({ visible, hideModal }) => {
       hideModal();
     }
   };
-
+  const addTyoeOfErrorHandler = (type) => {
+    setInputType(type);
+  };
   return (
     <Modal
       visible={visible}
@@ -80,6 +98,31 @@ export const AddModal = ({ visible, hideModal }) => {
           placeholder='Из какой сферы жизни ошибка?'
           maxLength={30}
         />
+
+        <ScrollView
+          style={styles.scroll}
+          showsVerticalScrollIndicator={false}
+        >
+          {typesOfErrors.map((item) => {
+            return (
+              <View
+                key={item.toString()}
+                style={styles.addTypeOfError}
+              >
+                <TouchableOpacity
+                  onPress={() =>
+                    addTyoeOfErrorHandler(item)
+                  }
+                  activeOpacity={0.7}
+                >
+                  <Text style={styles.addTypeOfErrorText}>
+                    {item}
+                  </Text>
+                </TouchableOpacity>
+              </View>
+            );
+          })}
+        </ScrollView>
       </View>
       <View style={styles.textInputBlock}>
         <TextInput
@@ -118,18 +161,34 @@ export const AddModal = ({ visible, hideModal }) => {
 const styles = StyleSheet.create({
   addBatton: {
     alignItems: 'center',
-  },
-  addButtonText: {
-    fontFamily: 'Roboto-Bold',
     borderWidth: 1,
     borderColor: 'black',
     borderRadius: 100,
     padding: 15,
+    marginHorizontal: '20%',
+  },
+  addButtonText: {
+    fontFamily: 'Roboto-Bold',
+  },
+  addTypeOfErrorText: {
+    fontFamily: 'Roboto-Bold',
+
+    fontSize: 15,
+  },
+  addTypeOfError: {
+    borderWidth: 1,
+    borderColor: 'black',
+    borderRadius: 100,
+
+    padding: 5,
+    paddingLeft: 8,
+    marginBottom: 2,
   },
   closeIcon: {
     alignSelf: 'flex-end',
     padding: 20,
   },
   input: { paddingHorizontal: 20 },
-  textInputBlock: { height: '20%' },
+  scroll: { paddingHorizontal: 20 },
+  textInputBlock: { height: '21%' },
 });

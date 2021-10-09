@@ -154,7 +154,7 @@ const styles = StyleSheet.create({
     paddingRight: Dimensions.get('window').width / 12,
   },
   flatList: {
-    paddingVertical: Dimensions.get('window').height / 11,
+    paddingTop: Dimensions.get('window').height / 9,
   },
   plusIcon: {
     alignSelf: 'center',
@@ -162,7 +162,7 @@ const styles = StyleSheet.create({
   },
   block: {
     width: Dimensions.get('window').width / 1.3,
-    height: Dimensions.get('window').height / 1.35,
+    height: Dimensions.get('window').height / 1.3,
     borderRadius: 25,
 
     borderWidth: 2,
@@ -194,7 +194,7 @@ const styles = StyleSheet.create({
 
   addBlock: {
     width: Dimensions.get('window').width / 1.3,
-    height: Dimensions.get('window').height / 1.35,
+    height: Dimensions.get('window').height / 1.3,
     borderRadius: 25,
     borderColor: 'black',
     borderWidth: 2,

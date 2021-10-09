@@ -134,13 +134,15 @@ export const EditModal = ({
 const styles = StyleSheet.create({
   addBatton: {
     alignItems: 'center',
-  },
-  addButtonText: {
-    fontFamily: 'Roboto-Bold',
+
     borderWidth: 1,
     borderColor: 'black',
     borderRadius: 100,
     padding: 15,
+    marginHorizontal: '20%',
+  },
+  addButtonText: {
+    fontFamily: 'Roboto-Bold',
   },
   closeIcon: {
     alignSelf: 'flex-end',
