@@ -10,6 +10,8 @@ import {
   TouchableOpacity,
   ScrollView,
   Touchable,
+  KeyboardAvoidingView,
+  Keyboard,
 } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { Dimensions, TextInput } from 'react-native';
@@ -25,6 +27,7 @@ export const AddModal = ({ visible, hideModal }) => {
   const typesOfErrors = [
     'Семья',
     'Финансы',
+    'Продажи',
     'Работа',
     'Здоровье',
     'Любовь',
@@ -34,6 +37,7 @@ export const AddModal = ({ visible, hideModal }) => {
     'Знакомства',
     'Секс',
     'Имидж',
+    'Просто затупил',
   ];
   const createTwoButtonAlert = () =>
     Alert.alert(
@@ -89,6 +93,12 @@ export const AddModal = ({ visible, hideModal }) => {
         size={40}
         style={styles.closeIcon}
       ></Ionicons>
+      {/*<TouchableOpacity
+        activeOpacity={1}
+        onPress={() => {
+          Keyboard.dismiss();
+        }}
+      >*/}
       <View style={styles.textInputBlock}>
         <TextInput
           multiline={true}
@@ -155,6 +165,7 @@ export const AddModal = ({ visible, hideModal }) => {
           </Text>
         </TouchableOpacity>
       </View>
+      {/*</TouchableOpacity>*/}
     </Modal>
   );
 };
