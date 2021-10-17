@@ -21,6 +21,7 @@ export const EditModal = ({
   visible,
   hideModal,
   editErrorId,
+  allowedEditType,
 }) => {
   const dispatch = useDispatch();
   const DATA = useSelector((state) => state.errors || '');
@@ -95,6 +96,7 @@ export const EditModal = ({
           value={inputTypeEdit}
           placeholder='Из какой сферы жизни ошибка?'
           maxLength={30}
+          accessible={allowedEditType}
         />
       </View>
       <View style={styles.textInputBlock}>

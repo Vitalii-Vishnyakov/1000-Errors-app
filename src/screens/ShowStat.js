@@ -11,40 +11,46 @@ import {
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
 import { useSelector } from 'react-redux';
+import { EditModal } from '../components/EditModal';
 import { sort } from '../components/Sort';
 import { SortTypeModal } from '../components/SortTypeModal';
 export const ShowStat = ({}) => {
   const DATA = useSelector((state) => state.errors);
-  const [isReload, setIsReload] = useState(false);
+  const [isShowEditModal, setIsShowEditModal] =
+    useState(false);
   const [isShowModal, setIsShowModal] = useState(false);
-  const [currentSortType, setCurrentSortType] = useState(
+  const [editErrorId, setEditErrorId] = useState(0);
+
+  const [tmp, setTmp] = useState([]);
+  const [sortType, setSortType] = useState(
     'По убыванию количества ошибок'
   );
-  const [tmp, setTmp] = useState([]);
   const sortTypes = [
     'По возрастанию количества ошибок',
     'По убыванию количества ошибок',
     'По возрастанию количества сделанных выводов',
     'По убыванию количества сделанных выводов',
-    'Все без вывода',
-    'Все с выводом',
   ];
+
   useEffect(() => {
-    setTmp(sort(DATA, 'По убыванию количества ошибок'));
-  }, [isReload, isShowModal]);
+    setTmp(sort(DATA, sortType));
+  }, [isShowModal, sortType]);
   //разделитель между кладками сделать как набор стикеров, а на самом деле иконки как типах ошибок
   return (
     <View style={styles.center}>
       <TouchableOpacity
         onPress={() => setIsShowModal(true)}
-        activeOpacity={0.1}
+        activeOpacity={0.8}
       >
-        <View style={styles.button}></View>
+        <View style={styles.button}>
+          <Text style={styles.sortText}>Отсортировать</Text>
+        </View>
       </TouchableOpacity>
 
       <FlatList
         data={tmp}
         keyExtractor={(item) => item.id.toString()}
+        showsVerticalScrollIndicator={false}
         renderItem={({ item }) => {
           return (
             <View style={styles.tabs}>
@@ -60,13 +66,37 @@ export const ShowStat = ({}) => {
                     item.id.toString()
                   }
                   renderItem={({ item }) => {
-                    return (
-                      <View style={styles.block}>
-                        <Text style={styles.numberBlock}>
-                          {item.id + ' '}
-                        </Text>
-                      </View>
-                    );
+                    if (item.id != 1) {
+                      return (
+                        <TouchableOpacity
+                          onPress={() => {
+                            setIsShowEditModal(
+                              (prev) => !prev
+                            );
+                            setEditErrorId(
+                              parseInt(item.id - 1)
+                            );
+                          }}
+                          activeOpacity={0.8}
+                        >
+                          <View
+                            style={{
+                              ...styles.block,
+                              borderColor:
+                                item.resultOfError
+                                  ? 'rgba(0, 184, 86, 1)'
+                                  : '#EE3D48',
+                            }}
+                          >
+                            <Text
+                              style={styles.numberBlock}
+                            >
+                              {item.id - 1}
+                            </Text>
+                          </View>
+                        </TouchableOpacity>
+                      );
+                    }
                   }}
                 ></FlatList>
               </View>
@@ -77,20 +107,35 @@ export const ShowStat = ({}) => {
       <SortTypeModal
         visible={isShowModal}
         onClose={() => setIsShowModal(false)}
+        setSortType={setSortType}
       ></SortTypeModal>
+      <EditModal
+        visible={isShowEditModal}
+        hideModal={() => {
+          setIsShowEditModal((prev) => !prev);
+        }}
+        editErrorId={editErrorId}
+        allowedEditType={false}
+      ></EditModal>
     </View>
   );
 };
 const styles = StyleSheet.create({
-  center: { paddingVertical: 30 },
+  center: { paddingVertical: 40 },
   block: {
-    backgroundColor: 'red',
     width: 50,
     height: 50,
     margin: 10,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    flex: 1,
+    borderRadius: 8,
+    borderWidth: 1,
   },
   numberBlock: {
-    fontSize: 16,
+    fontSize: 17,
+    alignSelf: 'center',
+    fontFamily: 'Roboto-Bold',
   },
   title: {
     fontSize: 17,
@@ -103,9 +148,16 @@ const styles = StyleSheet.create({
     margin: 5,
   },
   button: {
-    backgroundColor: 'green',
-    width: 50,
-    height: 50,
-    alignSelf: 'center',
+    alignItems: 'center',
+
+    borderWidth: 1,
+    borderColor: 'black',
+    borderRadius: 100,
+    padding: 5,
+    marginHorizontal: '30%',
+  },
+  sortText: {
+    fontSize: 16,
+    fontFamily: 'Roboto-Bold',
   },
 });

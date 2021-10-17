@@ -1,4 +1,5 @@
 import { insertionSort } from './insertionSort';
+import { onlyConclusion } from './onlyConclusion';
 
 export const sort = (DATA, criterion) => {
   const typesOfErrors = [
@@ -17,6 +18,7 @@ export const sort = (DATA, criterion) => {
     { id: 'Просто затупил', data: [] },
     { id: 'Другое', data: [] },
   ];
+
   for (let index = 0; index < DATA.length; index++) {
     switch (DATA[index]['typeOfError']) {
       case typesOfErrors[0].id:
@@ -62,9 +64,11 @@ export const sort = (DATA, criterion) => {
         typesOfErrors[13].data.push(DATA[index]);
         break;
       default:
+        typesOfErrors[13].data.push(DATA[index]);
         break;
     }
   }
+
   let sortedData;
   switch (criterion) {
     case 'По возрастанию количества ошибок':
@@ -79,10 +83,12 @@ export const sort = (DATA, criterion) => {
       break;
     case 'По убыванию количества сделанных выводов':
       break;
-    case 'Все без вывода':
-      break;
+    /*case 'Все без вывода':
+      sortedData = onlyConclusion(typesOfErrors);
+      return sortedData;
+
     case 'Все с выводом':
-      break;
+      break;*/
 
     default:
       sortedData = insertionSort(typesOfErrors);

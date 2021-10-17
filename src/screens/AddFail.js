@@ -140,6 +140,7 @@ export const AddFail = ({}) => {
           setIsShowEditModal((prev) => !prev);
         }}
         editErrorId={editErrorId}
+        allowedEditType={true}
       ></EditModal>
     </View>
   );
