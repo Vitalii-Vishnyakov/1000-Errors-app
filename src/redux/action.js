@@ -23,6 +23,10 @@ export const loadErrors = () => {
 export const addError = (text) => {
   return async (dispatch) => {
     let data = new Date();
+    const minutes =
+      data.getMinutes() > 9
+        ? data.getMinutes().toString()
+        : '0' + data.getMinutes().toString();
     const time =
       data.getDate().toString() +
       '/' +
@@ -32,7 +36,7 @@ export const addError = (text) => {
       ' ' +
       data.getHours().toString() +
       ':' +
-      data.getMinutes().toString();
+      minutes;
 
     const newError = {
       id: '',

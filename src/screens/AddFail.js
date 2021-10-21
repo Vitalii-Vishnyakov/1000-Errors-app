@@ -8,14 +8,15 @@ import {
   FlatList,
   TextInput,
   TouchableOpacity,
+  Image,
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-
 import { Dimensions } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { addError, loadErrors } from '../redux/action';
 import { AddModal } from '../components/AddModal';
 import { EditModal } from '../components/EditModal';
+import { selectIcons } from '../components/selectIcons';
 
 export const AddFail = ({}) => {
   const dispatch = useDispatch();
@@ -95,6 +96,12 @@ export const AddFail = ({}) => {
                         <Text style={styles.userText}>
                           {item.typeOfError}
                         </Text>
+                        <Image
+                          source={selectIcons(
+                            item.typeOfError
+                          )}
+                          style={styles.icons}
+                        ></Image>
                       </View>
                       <View style={styles.headerWrapper}>
                         <Text style={styles.header}>
@@ -200,5 +207,10 @@ const styles = StyleSheet.create({
     borderColor: 'black',
     borderWidth: 2,
     justifyContent: 'center',
+  },
+  icons: {
+    width: '30%',
+    height: '62%',
+    alignSelf: 'center',
   },
 });

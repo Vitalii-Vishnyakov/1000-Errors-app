@@ -63,7 +63,7 @@ export const SortTypeModal = ({
 };
 const styles = StyleSheet.create({
   mainFrame: {
-    height: '50%',
+    height: '30%',
     marginTop: 'auto',
     borderTopEndRadius: 10,
     borderTopStartRadius: 10,

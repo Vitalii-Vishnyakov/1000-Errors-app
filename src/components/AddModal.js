@@ -12,6 +12,7 @@ import {
   Touchable,
   KeyboardAvoidingView,
   Keyboard,
+  Platform,
 } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { Dimensions, TextInput } from 'react-native';
@@ -82,90 +83,98 @@ export const AddModal = ({ visible, hideModal }) => {
         setInputResult('');
       }}
     >
-      <Ionicons
-        name='close-outline'
-        onPress={() => {
-          hideModal();
-          setInputType('');
-          setInputmore('');
-          setInputResult('');
-        }}
-        size={40}
-        style={styles.closeIcon}
-      ></Ionicons>
-      {/*<TouchableOpacity
-        activeOpacity={1}
-        onPress={() => {
-          Keyboard.dismiss();
-        }}
-      >*/}
-      <View style={styles.textInputBlock}>
-        <TextInput
-          multiline={true}
-          style={styles.input}
-          onChangeText={setInputType}
-          value={inputType}
-          placeholder='Из какой сферы жизни ошибка?'
-          maxLength={30}
-        />
-
-        <ScrollView
-          style={styles.scroll}
-          showsVerticalScrollIndicator={false}
-        >
-          {typesOfErrors.map((item) => {
-            return (
-              <View
-                key={item.toString()}
-                style={styles.addTypeOfError}
-              >
-                <TouchableOpacity
-                  onPress={() =>
-                    addTyoeOfErrorHandler(item)
-                  }
-                  activeOpacity={0.7}
-                >
-                  <Text style={styles.addTypeOfErrorText}>
-                    {item}
-                  </Text>
-                </TouchableOpacity>
-              </View>
-            );
-          })}
-        </ScrollView>
-      </View>
-      <View style={styles.textInputBlock}>
-        <TextInput
-          multiline={true}
-          style={styles.input}
-          onChangeText={setInputmore}
-          value={inputMore}
-          placeholder='Расскажите подробнее...'
-          maxLength={200}
-        />
-      </View>
-      <View style={styles.textInputBlock}>
-        <TextInput
-          multiline={true}
-          style={styles.input}
-          onChangeText={setInputResult}
-          value={inputResult}
-          placeholder='Какой вывод вы сделали?'
-          maxLength={200}
-        />
-      </View>
-
-      <View style={styles.addBatton}>
+      <KeyboardAvoidingView
+        behavior={
+          Platform.OS == 'ios' ? 'padding' : 'height'
+        }
+      >
+        <Ionicons
+          name='close-outline'
+          onPress={() => {
+            hideModal();
+            setInputType('');
+            setInputmore('');
+            setInputResult('');
+          }}
+          size={40}
+          style={styles.closeIcon}
+        ></Ionicons>
         <TouchableOpacity
-          onPress={addErrorHandler}
-          activeOpacity={0.7}
+          activeOpacity={1}
+          onPress={() => {
+            Keyboard.dismiss();
+          }}
         >
-          <Text style={styles.addButtonText}>
-            Добавить ошибку
-          </Text>
+          <View style={styles.textInputBlock}>
+            <TextInput
+              multiline={true}
+              style={styles.input}
+              onChangeText={setInputType}
+              value={inputType}
+              placeholder='Из какой сферы жизни ошибка?'
+              maxLength={30}
+            />
+
+            <ScrollView
+              style={styles.scroll}
+              showsVerticalScrollIndicator={false}
+            >
+              {typesOfErrors.map((item) => {
+                return (
+                  <View
+                    key={item.toString()}
+                    style={styles.addTypeOfError}
+                  >
+                    <TouchableOpacity
+                      onPress={() =>
+                        addTyoeOfErrorHandler(item)
+                      }
+                      activeOpacity={0.7}
+                    >
+                      <Text
+                        style={styles.addTypeOfErrorText}
+                      >
+                        {item}
+                      </Text>
+                    </TouchableOpacity>
+                  </View>
+                );
+              })}
+            </ScrollView>
+          </View>
+          <View style={styles.textInputBlock}>
+            <TextInput
+              multiline={true}
+              style={styles.input}
+              onChangeText={setInputmore}
+              value={inputMore}
+              placeholder='Расскажите подробнее...'
+              maxLength={200}
+            />
+          </View>
+          <View style={styles.textInputBlock}>
+            <TextInput
+              multiline={true}
+              style={styles.input}
+              onChangeText={setInputResult}
+              value={inputResult}
+              placeholder='Какой вывод вы сделали?'
+              maxLength={200}
+            />
+          </View>
+
+          <View style={styles.addBatton}>
+            <TouchableOpacity
+              onPress={addErrorHandler}
+              activeOpacity={0.7}
+            >
+              <Text style={styles.addButtonText}>
+                Добавить ошибку
+              </Text>
+            </TouchableOpacity>
+          </View>
         </TouchableOpacity>
-      </View>
-      {/*</TouchableOpacity>*/}
+      </KeyboardAvoidingView>
     </Modal>
   );
 };
@@ -201,5 +210,5 @@ const styles = StyleSheet.create({
   },
   input: { paddingHorizontal: 20 },
   scroll: { paddingHorizontal: 20 },
-  textInputBlock: { height: '21%' },
+  textInputBlock: { height: '26%' },
 });
