@@ -7,6 +7,9 @@ import {
   Alert,
   TouchableOpacity,
   Text,
+  KeyboardAvoidingView,
+  Platform,
+  Keyboard,
 } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { Dimensions, TextInput } from 'react-native';
@@ -53,6 +56,7 @@ export const EditModal = ({
         },
       ]
     );
+
   const editErrorHandler = () => {
     if (
       !inputTypeEdit ||
@@ -82,54 +86,69 @@ export const EditModal = ({
         setInputResult('');
       }}
     >
-      <Ionicons
-        name='close-outline'
-        onPress={hideModal}
-        size={40}
-        style={styles.closeIcon}
-      ></Ionicons>
-      <View style={styles.textInputBlock}>
-        <TextInput
-          multiline={true}
-          style={styles.input}
-          onChangeText={setInputType}
-          value={inputTypeEdit}
-          placeholder='Из какой сферы жизни ошибка?'
-          maxLength={30}
-          accessible={allowedEditType}
-        />
-      </View>
-      <View style={styles.textInputBlock}>
-        <TextInput
-          multiline={true}
-          style={styles.input}
-          onChangeText={setInputmore}
-          value={inputMoreEdit}
-          placeholder='Расскажите подробнее...'
-          maxLength={200}
-        />
-      </View>
-      <View style={styles.textInputBlock}>
-        <TextInput
-          multiline={true}
-          style={styles.input}
-          onChangeText={setInputResult}
-          value={inputResultEdit}
-          placeholder='Какой вывод вы сделали?'
-          maxLength={200}
-        />
-      </View>
-
-      <View style={styles.addBatton}>
+      <KeyboardAvoidingView
+        behavior={
+          Platform.OS == 'ios' ? 'padding' : 'height'
+        }
+      >
+        <Ionicons
+          name='close-outline'
+          onPress={hideModal}
+          size={40}
+          style={styles.closeIcon}
+        ></Ionicons>
         <TouchableOpacity
-          onPress={editErrorHandler}
-          activeOpacity={0.7}
+          activeOpacity={1}
+          onPress={() => {
+            Keyboard.dismiss();
+          }}
         >
-          <Text style={styles.addButtonText}>
-            Отредактировать ошибку
-          </Text>
+          <View style={{ height: '15%' }}>
+            <Text style={styles.input}>
+              {inputTypeEdit}
+            </Text>
+            {/*<TextInput
+              multiline={true}
+              style={styles.input}
+              onChangeText={setInputType}
+              value={inputTypeEdit}
+              placeholder='Из какой сферы жизни ошибка?'
+              maxLength={30}
+              accessible={allowedEditType}
+            />*/}
+          </View>
+          <View style={{ height: '28%', marginBottom: 10 }}>
+            <TextInput
+              multiline={true}
+              style={styles.input}
+              onChangeText={setInputmore}
+              value={inputMoreEdit}
+              placeholder='Расскажите подробнее...'
+              maxLength={200}
+            />
+          </View>
+          <View style={{ height: '28%' }}>
+            <TextInput
+              multiline={true}
+              style={styles.input}
+              onChangeText={setInputResult}
+              value={inputResultEdit}
+              placeholder='Какой вывод вы сделали?'
+              maxLength={200}
+            />
+          </View>
         </TouchableOpacity>
-      </View>
+        <View style={styles.addBatton}>
+          <TouchableOpacity
+            onPress={editErrorHandler}
+            activeOpacity={0.7}
+          >
+            <Text style={styles.addButtonText}>
+              Отредактировать ошибку
+            </Text>
+          </TouchableOpacity>
+        </View>
+      </KeyboardAvoidingView>
     </Modal>
   );
 };
@@ -151,5 +170,5 @@ const styles = StyleSheet.create({
     padding: 20,
   },
   input: { paddingHorizontal: 20 },
-  textInputBlock: { height: '20%' },
+  textInputBlock: {},
 });

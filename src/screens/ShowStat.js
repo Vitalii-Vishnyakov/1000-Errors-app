@@ -14,7 +14,7 @@ import { useSelector } from 'react-redux';
 import { EditModal } from '../components/EditModal';
 import { sort } from '../components/Sort';
 import { SortTypeModal } from '../components/SortTypeModal';
-export const ShowStat = ({}) => {
+export const ShowStat = ({ navigation }) => {
   const DATA = useSelector((state) => state.errors);
   const [isShowEditModal, setIsShowEditModal] =
     useState(false);
@@ -34,7 +34,7 @@ export const ShowStat = ({}) => {
 
   useEffect(() => {
     setTmp(sort(DATA, sortType));
-  }, [isShowModal, sortType]);
+  }, [isShowModal, sortType, navigation.isFocused()]);
   //разделитель между кладками сделать как набор стикеров, а на самом деле иконки как типах ошибок
   return (
     <View style={styles.center}>
@@ -140,7 +140,6 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 17,
     fontFamily: 'Roboto-Medium',
-    borderBottomWidth: 1,
   },
   tabs: {
     padding: 5,

@@ -22,13 +22,18 @@ export const AddFail = ({}) => {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(loadErrors());
+    if (DATA.length > 1) setIsAppFirstTimeStart(false);
   }, [dispatch, isShowAddModal, isShowEditModal]);
+
   const [editErrorId, setEditErrorId] = useState(0);
+  const [isAppFirstTimeStart, setIsAppFirstTimeStart] =
+    useState(true);
   const [isShowAddModal, setIsShowAddModal] =
     useState(false);
   const [isShowEditModal, setIsShowEditModal] =
     useState(false);
   const tmpDATA = useSelector((state) => state.errors);
+
   const DATA = [];
   for (let index = 0; index < tmpDATA.length; index++) {
     if (index === 0) {
@@ -45,7 +50,14 @@ export const AddFail = ({}) => {
         renderItem={({ item }) => {
           if (item.id === 1) {
             return (
-              <View style={styles.separator}>
+              <View
+                style={{
+                  ...styles.separator,
+                  paddingRight: !DATA[1]
+                    ? 0
+                    : Dimensions.get('window').width / 12,
+                }}
+              >
                 <TouchableOpacity
                   activeOpacity={0.9}
                   onPress={() =>
@@ -53,7 +65,12 @@ export const AddFail = ({}) => {
                   }
                 >
                   <View
-                    style={styles.addBlock}
+                    style={{
+                      ...styles.addBlock,
+                      /*alignSelf: isAppFirstTimeStart
+                        ? 'center'
+                        : 'stretch',*/
+                    }}
                     key={item.id}
                   >
                     <Ionicons
@@ -69,7 +86,14 @@ export const AddFail = ({}) => {
             );
           } else {
             return (
-              <View style={styles.separator}>
+              <View
+                style={{
+                  ...styles.separator,
+                  paddingRight: !DATA[1]
+                    ? 0
+                    : Dimensions.get('window').width / 12,
+                }}
+              >
                 <TouchableOpacity
                   activeOpacity={0.9}
                   onPress={() => {
@@ -133,7 +157,10 @@ export const AddFail = ({}) => {
         horizontal={true}
         inverted
         showsHorizontalScrollIndicator={false}
-        style={styles.flatList}
+        style={{
+          ...styles.flatList,
+          alignSelf: !DATA[1] ? 'center' : 'stretch',
+        }}
       ></FlatList>
       <AddModal
         visible={isShowAddModal}
@@ -163,6 +190,7 @@ const styles = StyleSheet.create({
   },
   flatList: {
     paddingTop: Dimensions.get('window').height / 9,
+    //alignSelf: 'center',
   },
   plusIcon: {
     alignSelf: 'center',
@@ -194,6 +222,7 @@ const styles = StyleSheet.create({
     fontFamily: 'Roboto-Light',
     fontSize: 15,
     paddingHorizontal: 30,
+    marginBottom: 10,
   },
   header: {
     fontFamily: 'Roboto-Medium',
@@ -209,8 +238,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   icons: {
-    width: '30%',
-    height: '62%',
+    width: Dimensions.get('window').width / 4.5,
+    height: Dimensions.get('window').width / 4.5,
     alignSelf: 'center',
   },
 });

@@ -104,8 +104,17 @@ export const AddModal = ({ visible, hideModal }) => {
           onPress={() => {
             Keyboard.dismiss();
           }}
+          style={
+            {
+              //backgroundColor: 'red',
+            }
+          }
         >
-          <View style={styles.textInputBlock}>
+          <View
+            style={{
+              paddingBottom: 10,
+            }}
+          >
             <TextInput
               multiline={true}
               style={styles.input}
@@ -114,35 +123,41 @@ export const AddModal = ({ visible, hideModal }) => {
               placeholder='Из какой сферы жизни ошибка?'
               maxLength={30}
             />
-
-            <ScrollView
-              style={styles.scroll}
-              showsVerticalScrollIndicator={false}
-            >
-              {typesOfErrors.map((item) => {
-                return (
-                  <View
-                    key={item.toString()}
-                    style={styles.addTypeOfError}
-                  >
-                    <TouchableOpacity
-                      onPress={() =>
-                        addTyoeOfErrorHandler(item)
-                      }
-                      activeOpacity={0.7}
-                    >
-                      <Text
-                        style={styles.addTypeOfErrorText}
-                      >
-                        {item}
-                      </Text>
-                    </TouchableOpacity>
-                  </View>
-                );
-              })}
-            </ScrollView>
           </View>
-          <View style={styles.textInputBlock}>
+          <ScrollView
+            style={{
+              height: '12%',
+              paddingHorizontal: 10,
+              marginBottom: 10,
+            }}
+            showsVerticalScrollIndicator={false}
+          >
+            {typesOfErrors.map((item) => {
+              return (
+                <View
+                  key={item.toString()}
+                  style={styles.addTypeOfError}
+                >
+                  <TouchableOpacity
+                    onPress={() =>
+                      addTyoeOfErrorHandler(item)
+                    }
+                    activeOpacity={0.7}
+                  >
+                    <Text style={styles.addTypeOfErrorText}>
+                      {item}
+                    </Text>
+                  </TouchableOpacity>
+                </View>
+              );
+            })}
+          </ScrollView>
+
+          <View
+            style={{
+              height: '28%',
+            }}
+          >
             <TextInput
               multiline={true}
               style={styles.input}
@@ -152,7 +167,11 @@ export const AddModal = ({ visible, hideModal }) => {
               maxLength={200}
             />
           </View>
-          <View style={styles.textInputBlock}>
+          <View
+            style={{
+              height: '28%',
+            }}
+          >
             <TextInput
               multiline={true}
               style={styles.input}
@@ -162,18 +181,17 @@ export const AddModal = ({ visible, hideModal }) => {
               maxLength={200}
             />
           </View>
-
-          <View style={styles.addBatton}>
-            <TouchableOpacity
-              onPress={addErrorHandler}
-              activeOpacity={0.7}
-            >
-              <Text style={styles.addButtonText}>
-                Добавить ошибку
-              </Text>
-            </TouchableOpacity>
-          </View>
         </TouchableOpacity>
+        <View style={styles.addBatton}>
+          <TouchableOpacity
+            onPress={addErrorHandler}
+            activeOpacity={0.7}
+          >
+            <Text style={styles.addButtonText}>
+              Добавить ошибку
+            </Text>
+          </TouchableOpacity>
+        </View>
       </KeyboardAvoidingView>
     </Modal>
   );
@@ -210,5 +228,5 @@ const styles = StyleSheet.create({
   },
   input: { paddingHorizontal: 20 },
   scroll: { paddingHorizontal: 20 },
-  textInputBlock: { height: '26%' },
+  textInputBlock: {},
 });
