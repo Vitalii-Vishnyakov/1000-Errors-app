@@ -11,6 +11,7 @@ import {
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
 import { useSelector } from 'react-redux';
+import { AboutModal } from '../components/AboutModal';
 import { EditModal } from '../components/EditModal';
 import { sort } from '../components/Sort';
 import { SortTypeModal } from '../components/SortTypeModal';
@@ -19,6 +20,8 @@ export const ShowStat = ({ navigation }) => {
   const [isShowEditModal, setIsShowEditModal] =
     useState(false);
   const [isShowModal, setIsShowModal] = useState(false);
+  const [isShowAboutModal, setIsShowAboutModal] =
+    useState(false);
   const [editErrorId, setEditErrorId] = useState(0);
 
   const [tmp, setTmp] = useState([]);
@@ -96,6 +99,30 @@ export const ShowStat = ({ navigation }) => {
                           </View>
                         </TouchableOpacity>
                       );
+                    } else {
+                      return (
+                        <TouchableOpacity
+                          onPress={() => {
+                            setIsShowAboutModal(
+                              (prev) => !prev
+                            );
+                          }}
+                          activeOpacity={0.8}
+                        >
+                          <View
+                            style={{
+                              ...styles.block,
+                              borderColor: 'black',
+                            }}
+                          >
+                            <Text
+                              style={styles.numberBlock}
+                            >
+                              0
+                            </Text>
+                          </View>
+                        </TouchableOpacity>
+                      );
                     }
                   }}
                 ></FlatList>
@@ -104,6 +131,7 @@ export const ShowStat = ({ navigation }) => {
           );
         }}
       ></FlatList>
+
       <SortTypeModal
         visible={isShowModal}
         onClose={() => setIsShowModal(false)}
@@ -117,6 +145,12 @@ export const ShowStat = ({ navigation }) => {
         editErrorId={editErrorId}
         allowedEditType={false}
       ></EditModal>
+      <AboutModal
+        visible={isShowAboutModal}
+        hideModal={() => {
+          setIsShowAboutModal((prev) => !prev);
+        }}
+      ></AboutModal>
     </View>
   );
 };

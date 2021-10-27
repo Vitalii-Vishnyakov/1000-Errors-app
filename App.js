@@ -21,14 +21,9 @@ export default function App() {
     });
     try {
       await DB.init();
-      console.log('DB connct IIIU');
-    } catch (error) {
-      console.log('DB connct error ->>> ', error);
-    }
+    } catch (error) {}
     try {
-    } catch (error) {
-      console.log('Add zero item error ->>> ', error);
-    }
+    } catch (error) {}
   }
   const [isReady, setIsReady] = useState(false);
   if (!isReady) {

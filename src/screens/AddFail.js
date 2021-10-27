@@ -22,12 +22,10 @@ export const AddFail = ({}) => {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(loadErrors());
-    if (DATA.length > 1) setIsAppFirstTimeStart(false);
   }, [dispatch, isShowAddModal, isShowEditModal]);
 
   const [editErrorId, setEditErrorId] = useState(0);
-  const [isAppFirstTimeStart, setIsAppFirstTimeStart] =
-    useState(true);
+
   const [isShowAddModal, setIsShowAddModal] =
     useState(false);
   const [isShowEditModal, setIsShowEditModal] =
