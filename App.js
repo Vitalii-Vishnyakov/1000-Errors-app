@@ -11,7 +11,7 @@ import { addError } from './src/redux/action';
 import { disableExpoCliLogging } from 'expo/build/logs/Logs';
 
 export default function App() {
-  //const dispatch = useDispatch();
+  
   async function onAppLoad() {
     await Font.loadAsync({
       'Roboto-Bold': require('./assets/fonts/Roboto-Bold.ttf'),
